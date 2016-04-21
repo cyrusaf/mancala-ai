@@ -19,18 +19,18 @@ class MancalaWindow:
         self.turn = p1
         self.wait = p2
         self.root = master
-        
+
         frame = Frame(master)
         frame.pack()
 
         # Create the board
         self.makeBoard( frame )
-        
+
         displayStr = "Welcome to Mancala"
-            
+
         self.status = Label(frame, text=displayStr)
         self.status.pack(side=BOTTOM)
-        
+
     def enableBoard(self):
         """ Allow a human player to make moves by clicking"""
         for i in [0, 1]:
@@ -88,10 +88,10 @@ class MancalaWindow:
         binH = self.HEIGHT/2
         for j in [0, 1]:
             for i in range(self.game.NCUPS):
-                
+
                 self.cups[j][i].create_rectangle(self.PAD, self.PAD, binW, binH)
         self.p1cup.create_oval(self.PAD, self.PAD+0.1*self.HEIGHT, self.CUPW, self.HEIGHT, width=2 )
-        
+
 
     def newgame(self):
         """ Start a new game between the players """
@@ -123,6 +123,7 @@ class MancalaWindow:
             self.enableBoard()
         else:
             move = self.turn.chooseMove( self.game )
+            print "move:: ", move
             playAgain = self.game.makeMove( self.turn, move )
             if not playAgain:
                 self.swapTurns()
@@ -138,8 +139,8 @@ class MancalaWindow:
         if self.turn.type != Player.HUMAN:
             statusstr += "Please wait..."
         self.status['text'] = statusstr
-        
-        
+
+
     def resetStones(self):
         """ Clear the stones and redraw them """
         # Put the stones in the cups
@@ -156,15 +157,15 @@ class MancalaWindow:
         self.clearCup(self.p2cup)
         self.p2cup.create_text(self.CUPW/2, 10, text=str(self.game.scoreCups[1]), tag="num")
         self.p1cup.create_text(self.CUPW/2, 10+0.1*self.HEIGHT, text=str(self.game.scoreCups[0]), tag="num")
-        
-    
+
+
     def clearCup( self, cup ):
         """ Clear the stones in the given cup"""
         titems = cup.find_withtag("num")
         stones = cup.find_withtag("stone")
         cup.delete(titems)
         cup.delete(stones)
-            
+
 
     def callback(self, event):
         """ Handle the human player's move"""
@@ -192,7 +193,7 @@ class MancalaWindow:
             self.enableBoard()
         else:
             self.continueGame()
-        
+
 
 def startGame(p1, p2):
     """ Start the game of Mancala with two players """
